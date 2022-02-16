@@ -1,18 +1,26 @@
-'use strict'
+'use strict';
 
 function onInit() {
     renderGallery();
+    initMeme();
 }
 
 function renderGallery() {
     const elGallery = document.querySelector('.gallery-container');
-    for (var i = 1; i < 19; i++) {
+    const images = getMemeImgs();
+    images.forEach(el => {
         elGallery.innerHTML += `
-        <img src="img/${i}.jpg">
+        <img src="img/${el.id}.jpg" onclick="onImgSelect(${el.id})">
         `
-    }
+    })
 }
 
-function renderMeme() {
+function clearGallery() {
+    const elGallery = document.querySelector('.gallery-container');
+    elGallery.innerHTML = '';
+}
 
+function onImgSelect(id) {
+    setImg(id);
+    clearGallery();
 }

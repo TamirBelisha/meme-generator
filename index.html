@@ -13,7 +13,7 @@
     <header class="main-header flex align-center space-between">
         <div class="logo"></div>
         <nav class="nav-container flex">
-            <a href="#">Gallery</a>
+            <a href="#" onclick="renderGallery()">Gallery</a>
             <a href="#">About</a>
         </nav>
     </header>
@@ -27,24 +27,24 @@
         <section class="gallery-container d-none">
         </section>
         <section class="meme-editor flex">
-            <canvas id="meme-image" height="500" width="500" onclick="draw(event)"></canvas>
+            <canvas id="meme-canvas" height="500" width="500" onclick="draw(event)"></canvas>
             <section class="control-box">
-                <input type="text" placeholder="MEME GENERATOR" class="txt-input">
+                <input type="text" placeholder="MEME GENERATOR" class="txt-input" onkeyup="onSetLineTxt()">
                 <button class="btn move-line"></button>
                 <button class="btn add-line"></button>
                 <button class="btn delete-line"></button>
-                <button class="btn font-increase"></button>
-                <button class="btn font-decrease"></button>
+                <button class="btn font-increase" onclick="onResizeFont('increase')"></button>
+                <button class="btn font-decrease" onclick="onResizeFont('decrease')"></button>
                 <button class="btn txt-align-left"></button>
                 <button class="btn txt-align-center"></button>
                 <button class="btn txt-align-right"></button>
-                <select name="font-fam" id="font-fam">
+                <select name="font-fam" id="font-fam" onchange="onSetFontFamily()">
                     <option value="impact">Impact</option>
                     <option value="mukta">Mukta</option>
                     <option value="arial">Arial</option>
                 </select>
                 <button class="btn txt-stroke"></button>
-                <input type="color" class="btn txt-color">
+                <input type="color" class="btn txt-color" onchange="onSetColor()">
                 <section class="sticker-container">
 
                 </section>
@@ -58,6 +58,8 @@
     </footer>
 
 
+    <script src="js/services/meme-service.js"></script>
+    <script src="js/meme-controller.js"></script>
     <script src="js/main.js"></script>
 </body>
 

@@ -38,10 +38,12 @@ var gMeme = {
 
 function createLine(txt) {
     return {
+        font: 'Impact',
         txt,
-        size: 20,
+        size: 40,
         align: 'left',
-        color: 'white'
+        color: 'white',
+        isStroke: false
     }
 }
 
@@ -54,12 +56,12 @@ function getMemeImgs() {
 }
 
 function setFontFamily() {
-    gMeme.lines[0].font = document.getElementById('font-fam').value
+    gMeme.lines[gMeme.selectedLineIdx].font = document.getElementById('font-fam').value
     renderMeme();
 }
 
 function setLineTxt() {
-    gMeme.lines[0].txt = document.querySelector('.txt-input').value;
+    gMeme.lines[gMeme.selectedLineIdx].txt = document.querySelector('.txt-input').value;
     renderMeme();
 }
 
@@ -76,4 +78,11 @@ function setColor() {
 function resizeFont(key) {
     gMeme.lines[gMeme.selectedLineIdx].size += (key === 'increase') ? 2 : -2;
     renderMeme();
+}
+
+function changeLine() {
+    gMeme.selectedLineIdx++;
+    if (gMeme.selectedLineIdx === gMeme.lines.length) {
+        gMeme.selectedLineIdx = 0
+    }
 }

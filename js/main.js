@@ -1,4 +1,5 @@
 'use strict';
+var gElMemeEditor = document.querySelector('.meme-editor')
 
 function onInit() {
     renderGallery();
@@ -8,11 +9,14 @@ function onInit() {
 function renderGallery() {
     const elGallery = document.querySelector('.gallery-container');
     const images = getMemeImgs();
+    elGallery.innerHTML = '';
     images.forEach(el => {
         elGallery.innerHTML += `
         <img src="img/${el.id}.jpg" onclick="onImgSelect(${el.id})">
         `
     })
+    gElMemeEditor.classList.add('hide');
+
 }
 
 function clearGallery() {
@@ -23,4 +27,5 @@ function clearGallery() {
 function onImgSelect(id) {
     setImg(id);
     clearGallery();
+    gElMemeEditor.classList.remove('hide');
 }

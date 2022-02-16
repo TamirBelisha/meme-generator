@@ -1,5 +1,4 @@
 'use strict';
-
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 };
 var gImgs = [
     { id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
@@ -32,7 +31,7 @@ var gMeme = {
         color: 'white',
         isStroke: true
     }]
-}
+};
 
 function createLine(txt) {
     return {
@@ -54,12 +53,13 @@ function getMemeImgs() {
 }
 
 function setFontFamily() {
-    gMeme.lines[gMeme.selectedLineIdx].font = document.getElementById('font-fam').value
+    gMeme.lines[gMeme.selectedLineIdx].font = document.getElementById('font-fam').value;
     renderMeme();
 }
 
 function setLineTxt(txt) {
-    gMeme.lines[gMeme.selectedLineIdx].txt = txt
+    if (gMeme.lines.length < gMeme.selectedLineIdx) return;
+    gMeme.lines[gMeme.selectedLineIdx].txt = txt;
     renderMeme();
 }
 
@@ -69,7 +69,7 @@ function setImg(id) {
 }
 
 function setColor() {
-    gMeme.lines[gMeme.selectedLineIdx].color = document.querySelector('.txt-color').value;
+    gMeme.lines[gMeme.selectedLineIdx].color = document.getElementById('txt-color').value;
     renderMeme();
 }
 
@@ -81,13 +81,13 @@ function resizeFont(key) {
 function changeLine() {
     gMeme.selectedLineIdx++;
     if (gMeme.selectedLineIdx >= gMeme.lines.length) {
-        gMeme.selectedLineIdx = 0
+        gMeme.selectedLineIdx = 0;
     }
     renderMeme();
 }
 
 function addLine(txt) {
-    gMeme.lines.push(createLine('MEME GENERATOR'));
+    gMeme.lines.push(createLine('TEXT'));
     changeLine();
     renderMeme();
 }
@@ -97,25 +97,52 @@ function setStroke() {
     renderMeme();
 }
 
+function setAlign(key) {
+    var currLine = gMeme.lines[gMeme.selectedLineIdx];
+    currLine.align = key;
+    switch (key) {
+        case 'left':
+            currLine.pos.x = 0;
+            break;
+        case 'center':
+            currLine.pos.x = 120;
+            break;
+        case 'right':
+            currLine.pos.x = 270;
+            break;
+        default:
+            break;
+    }
+    renderMeme();
+}
+
 function deleteLine() {
-    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1);
     renderMeme();
 }
 
 
 
 function isLineClicked(pos) {
-    var currLine = gMeme.lines[gMeme.selectedLineIdx]
-    var linePos = currLine.pos
-    if (pos.x > linePos.x && pos.x < (linePos.x + linePos.xLength) && pos.y > linePos.y && pos.y < (linePos.y + currLine.size)) {
-        return true;
-    }
-    return false;
+    var isTrue = false;
+    gMeme.lines.forEach((line, idx) => {
+        if (pos.x > line.pos.x && pos.x < (line.pos.x + line.pos.xLength) && pos.y > line.pos.y && pos.y < (line.pos.y + line.size)) {
+            gMeme.selectedLineIdx = idx;
+            renderMeme();
+            isTrue = true;
+        }
+    })
+    return isTrue;
 }
 
 
 function moveLine(dx, dy) {
     var currLine = gMeme.lines[gMeme.selectedLineIdx];
-    currLine.pos.x += dx
-    currLine.pos.y += dy
+    currLine.pos.x += dx;
+    currLine.pos.y += dy;
+}
+
+function clearFocus() {
+    gMeme.selectedLineIdx = 100;
+    renderMeme();
 }

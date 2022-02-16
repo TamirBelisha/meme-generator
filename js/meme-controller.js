@@ -14,6 +14,7 @@ function renderMeme() {
     const meme = getMeme();
     const images = getMemeImgs();
     drawImg(images[(meme.selectedImgId - 1)].url);
+    gElCanvas.style.cursor = 'grab'
 }
 
 
@@ -27,41 +28,23 @@ function drawText() {
         gCtx.fillStyle = line.color;
         gCtx.font = `${line.size}px ${line.font}`;
         var txt = gCtx.measureText(line.txt)
-        if (idx === 0) {
-            if (!line.pos) {
-                gCtx.fillText(line.txt, 50, 50);
-                line.pos = { x: 50, y: 50, xLength: txt.width }
-                if (idx === meme.selectedLineIdx) drawFocus(50, 50, txt.width, line.size)
-                if (line.isStroke) gCtx.strokeText(line.txt, 50, 50);
-            } else {
-                gCtx.fillText(line.txt, line.pos.x, line.pos.y);
-                if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
-                if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
-            }
-        } else if (idx === 1) {
-            if (!line.pos) {
-                gCtx.fillText(line.txt, 50, 450);
-                line.pos = { x: 50, y: 450, xLength: txt.width }
-                if (idx === meme.selectedLineIdx) drawFocus(50, 450, txt.width, line.size)
-                if (line.isStroke) gCtx.strokeText(line.txt, 50, 450);
-            } else {
-                gCtx.fillText(line.txt, line.pos.x, line.pos.y);
-                if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
-                if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
-            }
-        } else {
-            if (!line.pos) {
-                gCtx.fillText(line.txt, 50, 250);
-                line.pos = { x: 50, y: 250, xLength: txt.width }
-                if (idx === meme.selectedLineIdx) drawFocus(50, 250, txt.width, line.size)
-                if (line.isStroke) gCtx.strokeText(line.txt, 50, 250);
-            } else {
-                gCtx.fillText(line.txt, line.pos.x, line.pos.y);
-                if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
-                if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
-
-            }
+        if (!line.pos && idx === 0) {
+            gCtx.fillText(line.txt, 50, 50);
+            line.pos = { x: 50, y: 50 };
+            if (line.isStroke) gCtx.strokeText(line.txt, 50, 50);
+        } else if (!line.pos && idx === 1) {
+            gCtx.fillText(line.txt, 50, 450);
+            line.pos = { x: 50, y: 450 };
+            if (line.isStroke) gCtx.strokeText(line.txt, 50, 450);
+        } else if (!line.pos) {
+            gCtx.fillText(line.txt, 50, 250);
+            line.pos = { x: 50, y: 250 };
+            if (line.isStroke) gCtx.strokeText(line.txt, 50, 250);
         }
+        line.pos.xLength = txt.width;
+        gCtx.fillText(line.txt, line.pos.x, line.pos.y);
+        if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
+        if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
     })
 }
 
@@ -103,6 +86,10 @@ function onChangeLine() {
     changeLine();
 }
 
+function onSetAlign(key) {
+    setAlign(key);
+}
+
 function onAddLine() {
     var txt = document.querySelector('.txt-input').value;
     if (!txt) return;
@@ -120,17 +107,20 @@ function onDeleteLine() {
 
 
 function addMouseListeners() {
-    gElCanvas.addEventListener('mousemove', onMove)
-    gElCanvas.addEventListener('mousedown', onDown)
-    gElCanvas.addEventListener('mouseup', onUp)
+    gElCanvas.addEventListener('mousemove', onMove);
+    gElCanvas.addEventListener('mousedown', onDown);
+    gElCanvas.addEventListener('mouseup', onUp);
 }
 
 function onDown(ev) {
-    const pos = getEvPos(ev)
-    if (!isLineClicked(pos)) return
+    const pos = getEvPos(ev);
+    if (!isLineClicked(pos)) {
+        clearFocus();
+        return;
+    }
     gIsDrag = true;
-    gStartPos = pos
-    document.body.style.cursor = 'grabbing'
+    gStartPos = pos;
+    gElCanvas.style.cursor = 'grabbing';
 
 }
 
@@ -147,7 +137,7 @@ function onMove(ev) {
 
 function onUp() {
     gIsDrag = false;
-    document.body.style.cursor = 'grab'
+    gElCanvas.style.cursor = 'grab'
 }
 
 function getEvPos(ev) {

@@ -35,9 +35,9 @@
                 <button class="btn delete-line" onclick="onDeleteLine()"></button>
                 <button class="btn font-increase" onclick="onResizeFont('increase')"></button>
                 <button class="btn font-decrease" onclick="onResizeFont('decrease')"></button>
-                <button class="btn txt-align-left"></button>
-                <button class="btn txt-align-center"></button>
-                <button class="btn txt-align-right"></button>
+                <button class="btn txt-align-left" onclick="onSetAlign('left')"></button>
+                <button class="btn txt-align-center" onclick="onSetAlign('center')"></button>
+                <button class="btn txt-align-right" onclick="onSetAlign('right')"></button>
                 <select name="font-fam" id="font-fam" onchange="onSetFontFamily()">
                     <option value="impact">Impact</option>
                     <option value="mukta">Mukta</option>
@@ -45,7 +45,7 @@
                 </select>
                 <button class="btn txt-stroke" onclick="onSetStroke()"></button>
                 <button class="btn txt-color">
-                    <input type="color" class="btn txt-color" onchange="onSetColor()">
+                    <input type="color" class="btn" id="txt-color" onchange="onSetColor()">
                 </button>
                 <section class="sticker-container">
 

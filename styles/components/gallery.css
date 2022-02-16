@@ -1,0 +1,12 @@
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: auto;
+    gap: .7em;
+}
+
+.gallery-container img {
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}

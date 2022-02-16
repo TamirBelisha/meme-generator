@@ -1,0 +1,26 @@
+.main-header {
+    padding: 1rem;
+    background-image: linear-gradient(to right, var(--clr1), rgba(126, 17, 17, 0.411));
+    width: 100%;
+    height: 10vh;
+}
+
+.nav-container {
+    gap: 1rem;
+}
+
+.nav-container a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.2em;
+}
+
+.logo {
+    background-image: url(../../img/LOGO.png);
+    height: 100%;
+    width: 200px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}

@@ -1,0 +1,33 @@
+.flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.d-none {
+    display: none;
+}
+
+.grid {
+    display: grid;
+}
+
+.btn {
+    background-color: white;
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    background-size: contain;
+}

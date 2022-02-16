@@ -1,0 +1,12 @@
+.meme-editor {
+    justify-content: space-around;
+    height: 60vh;
+    width: 100vw;
+    padding: 1.875rem;
+}
+
+.meme-image {
+    grid-column: 1 / 14;
+    grid-row: 1 / 14;
+    margin: 0 auto;
+}

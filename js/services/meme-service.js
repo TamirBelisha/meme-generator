@@ -101,3 +101,21 @@ function deleteLine() {
     gMeme.lines.splice(gMeme.selectedLineIdx, 1)
     renderMeme();
 }
+
+
+
+function isLineClicked(pos) {
+    var currLine = gMeme.lines[gMeme.selectedLineIdx]
+    var linePos = currLine.pos
+    if (pos.x > linePos.x && pos.x < (linePos.x + linePos.xLength) && pos.y > linePos.y && pos.y < (linePos.y + currLine.size)) {
+        return true;
+    }
+    return false;
+}
+
+
+function moveLine(dx, dy) {
+    var currLine = gMeme.lines[gMeme.selectedLineIdx];
+    currLine.pos.x += dx
+    currLine.pos.y += dy
+}

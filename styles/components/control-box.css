@@ -81,6 +81,14 @@
     background-image: url(../../img/icons/paint-board-and-brush.png);
 }
 
+input[type="color"] {
+    opacity: 0;
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: none;
+}
+
 .sticker-container {
     grid-column: 1 / 6;
     grid-row: 7 / 9;

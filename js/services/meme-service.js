@@ -25,15 +25,13 @@ var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [{
-            font: 'Impact',
-            txt: 'MEME GENERATOR',
-            size: 40,
-            align: 'left',
-            color: 'white',
-            isStroke: true
-        },
-        createLine('makore Ya ami')
-    ]
+        font: 'Impact',
+        txt: 'MEME GENERATOR',
+        size: 40,
+        align: 'left',
+        color: 'white',
+        isStroke: true
+    }]
 }
 
 function createLine(txt) {
@@ -43,7 +41,7 @@ function createLine(txt) {
         size: 40,
         align: 'left',
         color: 'white',
-        isStroke: false
+        isStroke: true
     }
 }
 
@@ -60,8 +58,8 @@ function setFontFamily() {
     renderMeme();
 }
 
-function setLineTxt() {
-    gMeme.lines[gMeme.selectedLineIdx].txt = document.querySelector('.txt-input').value;
+function setLineTxt(txt) {
+    gMeme.lines[gMeme.selectedLineIdx].txt = txt
     renderMeme();
 }
 
@@ -82,7 +80,24 @@ function resizeFont(key) {
 
 function changeLine() {
     gMeme.selectedLineIdx++;
-    if (gMeme.selectedLineIdx === gMeme.lines.length) {
+    if (gMeme.selectedLineIdx >= gMeme.lines.length) {
         gMeme.selectedLineIdx = 0
     }
+    renderMeme();
+}
+
+function addLine(txt) {
+    gMeme.lines.push(createLine('MEME GENERATOR'));
+    changeLine();
+    renderMeme();
+}
+
+function setStroke() {
+    gMeme.lines[gMeme.selectedLineIdx].isStroke = !gMeme.lines[gMeme.selectedLineIdx].isStroke;
+    renderMeme();
+}
+
+function deleteLine() {
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    renderMeme();
 }

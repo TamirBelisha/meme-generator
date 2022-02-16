@@ -31,8 +31,8 @@
             <section class="control-box">
                 <input type="text" placeholder="MEME GENERATOR" class="txt-input" onkeyup="onSetLineTxt()">
                 <button class="btn move-line" onclick="onChangeLine()"></button>
-                <button class="btn add-line"></button>
-                <button class="btn delete-line"></button>
+                <button class="btn add-line" onclick="onAddLine()"></button>
+                <button class="btn delete-line" onclick="onDeleteLine()"></button>
                 <button class="btn font-increase" onclick="onResizeFont('increase')"></button>
                 <button class="btn font-decrease" onclick="onResizeFont('decrease')"></button>
                 <button class="btn txt-align-left"></button>
@@ -43,8 +43,10 @@
                     <option value="mukta">Mukta</option>
                     <option value="arial">Arial</option>
                 </select>
-                <button class="btn txt-stroke"></button>
-                <input type="color" class="btn txt-color" onchange="onSetColor()">
+                <button class="btn txt-stroke" onclick="onSetStroke()"></button>
+                <button class="btn txt-color">
+                    <input type="color" class="btn txt-color" onchange="onSetColor()">
+                </button>
                 <section class="sticker-container">
 
                 </section>

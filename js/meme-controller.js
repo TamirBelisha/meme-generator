@@ -17,43 +17,35 @@ function renderMeme() {
 function drawText() {
     const meme = getMeme();
     const lines = meme.lines;
-    lines.forEach((line) => {
+    gCtx.textBaseline = 'top';
+    lines.forEach((line, idx) => {
         gCtx.lineWidth = 2;
         gCtx.strokeStyle = 'black';
         gCtx.fillStyle = line.color;
         gCtx.font = `${line.size}px ${line.font}`;
-        if (line === lines[0]) {
+        var txt = gCtx.measureText(line.txt)
+        if (idx === 0) {
             gCtx.fillText(line.txt, 50, 50);
+            if (idx === meme.selectedLineIdx) drawFocus(50, 50, txt.width, line.size)
             if (line.isStroke) gCtx.strokeText(line.txt, 50, 50);
-        } else if (line === lines[1]) {
+        } else if (idx === 1) {
             gCtx.fillText(line.txt, 50, 450);
+            if (idx === meme.selectedLineIdx) drawFocus(50, 450, txt.width, line.size)
             if (line.isStroke) gCtx.strokeText(line.txt, 50, 450);
         } else {
             gCtx.fillText(line.txt, 50, 250);
+            if (idx === meme.selectedLineIdx) drawFocus(50, 250, txt.width, line.size)
             if (line.isStroke) gCtx.strokeText(line.txt, 50, 250);
         }
     })
 }
 
-function drawFocus() {
-    var x;
-    var y;
-    var xLength;
-    var yLength;
-    const meme = getMeme()
-    const line = meme.lines[meme.selectedLineIdx]
-    if (meme.selectedLineIdx === 0) {
-        x = 25
-        y = 25
-        xLength = (line.txt.length + 25)
-        yLength = (line.size + 25)
-    }
+function drawFocus(x, y, xLength, yLength) {
     gCtx.beginPath();
     gCtx.rect(x, y, xLength, yLength);
-    gCtx.fillStyle = 'orange';
-    gCtx.fillRect(x, y, xLength, yLength);
     gCtx.strokeStyle = 'black';
     gCtx.stroke();
+    gCtx.closePath();
 }
 
 function drawImg(src) {
@@ -70,7 +62,8 @@ function onSetFontFamily() {
 }
 
 function onSetLineTxt() {
-    setLineTxt();
+    var txt = document.querySelector('.txt-input').value;
+    setLineTxt(txt);
 }
 
 function onSetColor() {
@@ -83,4 +76,19 @@ function onResizeFont(key) {
 
 function onChangeLine() {
     changeLine();
+}
+
+function onAddLine() {
+    var txt = document.querySelector('.txt-input').value;
+    if (!txt) return;
+    document.querySelector('.txt-input').value = '';
+    addLine(txt);
+}
+
+function onSetStroke() {
+    setStroke();
+}
+
+function onDeleteLine() {
+    deleteLine();
 }

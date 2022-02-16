@@ -39,15 +39,28 @@ function drawText() {
                 if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
             }
         } else if (idx === 1) {
-            gCtx.fillText(line.txt, 50, 450);
-            line.pos = { x: 50, y: 450, xLength: txt.width }
-            if (idx === meme.selectedLineIdx) drawFocus(50, 450, txt.width, line.size)
-            if (line.isStroke) gCtx.strokeText(line.txt, 50, 450);
+            if (!line.pos) {
+                gCtx.fillText(line.txt, 50, 450);
+                line.pos = { x: 50, y: 450, xLength: txt.width }
+                if (idx === meme.selectedLineIdx) drawFocus(50, 450, txt.width, line.size)
+                if (line.isStroke) gCtx.strokeText(line.txt, 50, 450);
+            } else {
+                gCtx.fillText(line.txt, line.pos.x, line.pos.y);
+                if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
+                if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
+            }
         } else {
-            gCtx.fillText(line.txt, 50, 250);
-            line.pos = { x: 50, y: 250, xLength: txt.width }
-            if (idx === meme.selectedLineIdx) drawFocus(50, 250, txt.width, line.size)
-            if (line.isStroke) gCtx.strokeText(line.txt, 50, 250);
+            if (!line.pos) {
+                gCtx.fillText(line.txt, 50, 250);
+                line.pos = { x: 50, y: 250, xLength: txt.width }
+                if (idx === meme.selectedLineIdx) drawFocus(50, 250, txt.width, line.size)
+                if (line.isStroke) gCtx.strokeText(line.txt, 50, 250);
+            } else {
+                gCtx.fillText(line.txt, line.pos.x, line.pos.y);
+                if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
+                if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
+
+            }
         }
     })
 }

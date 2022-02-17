@@ -30,6 +30,7 @@
     border: 3px solid rgb(255, 255, 255);
     border-radius: 5px;
     background-size: contain;
+    transition: all .2s;
 }
 
 .hide {

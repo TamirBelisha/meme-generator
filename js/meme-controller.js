@@ -8,9 +8,12 @@ function initMeme() {
     gElCanvas = document.getElementById('meme-canvas');
     gCtx = gElCanvas.getContext('2d');
     addMouseListeners();
+    resetMeme();
 }
 
 function renderMeme() {
+    renderStickers()
+
     const meme = getMeme();
     const images = getMemeImgs();
     drawImg(images[(meme.selectedImgId - 1)].url);
@@ -24,26 +27,26 @@ function drawText() {
     gCtx.textBaseline = 'top';
     lines.forEach((line, idx) => {
         gCtx.lineWidth = 2;
-        gCtx.strokeStyle = 'black';
+        gCtx.strokeStyle = line.stroke;
         gCtx.fillStyle = line.color;
         gCtx.font = `${line.size}px ${line.font}`;
         var txt = gCtx.measureText(line.txt)
         if (!line.pos && idx === 0) {
             gCtx.fillText(line.txt, 50, 50);
             line.pos = { x: 50, y: 50 };
-            if (line.isStroke) gCtx.strokeText(line.txt, 50, 50);
+            gCtx.strokeText(line.txt, 50, 50);
         } else if (!line.pos && idx === 1) {
             gCtx.fillText(line.txt, 50, 450);
             line.pos = { x: 50, y: 450 };
-            if (line.isStroke) gCtx.strokeText(line.txt, 50, 450);
+            gCtx.strokeText(line.txt, 50, 450);
         } else if (!line.pos) {
             gCtx.fillText(line.txt, 50, 250);
             line.pos = { x: 50, y: 250 };
-            if (line.isStroke) gCtx.strokeText(line.txt, 50, 250);
+            gCtx.strokeText(line.txt, 50, 250);
         }
         line.pos.xLength = txt.width;
         gCtx.fillText(line.txt, line.pos.x, line.pos.y);
-        if (line.isStroke) gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
+        gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
         if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
     })
 }
@@ -84,6 +87,10 @@ function onResizeFont(key) {
 
 function onChangeLine() {
     changeLine();
+}
+
+function onSetRandomMeme() {
+    setRandomMeme();
 }
 
 function onSetAlign(key) {

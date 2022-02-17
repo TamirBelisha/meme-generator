@@ -13,6 +13,11 @@
     text-decoration: none;
     color: black;
     font-size: 1.2em;
+    transition: color .2s;
+}
+
+.nav-container a:hover {
+    color: white;
 }
 
 .logo {

@@ -1,24 +1,27 @@
 'use strict';
-var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 };
+const STORAGE_KEY = 'memesDB';
+const gStickerPageSize = 5;
+var gStickers = ['👙', '👓', '👚', '💍', '👑', '👛', '👜', '👝', '🎒', '👞', '👟', '💼', '👒', '🎩', '🎓']
+var gStickerPageIdx = 0;
 var gImgs = [
-    { id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
-    { id: 2, url: 'img/2.jpg', keywords: ['funny', 'cat'] },
-    { id: 3, url: 'img/3.jpg', keywords: ['funny', 'cat'] },
-    { id: 4, url: 'img/4.jpg', keywords: ['funny', 'cat'] },
-    { id: 5, url: 'img/5.jpg', keywords: ['funny', 'cat'] },
-    { id: 6, url: 'img/6.jpg', keywords: ['funny', 'cat'] },
-    { id: 7, url: 'img/7.jpg', keywords: ['funny', 'cat'] },
-    { id: 8, url: 'img/8.jpg', keywords: ['funny', 'cat'] },
-    { id: 9, url: 'img/9.jpg', keywords: ['funny', 'cat'] },
-    { id: 10, url: 'img/10.jpg', keywords: ['funny', 'cat'] },
-    { id: 11, url: 'img/11.jpg', keywords: ['funny', 'cat'] },
-    { id: 12, url: 'img/12.jpg', keywords: ['funny', 'cat'] },
-    { id: 13, url: 'img/13.jpg', keywords: ['funny', 'cat'] },
-    { id: 14, url: 'img/14.jpg', keywords: ['funny', 'cat'] },
-    { id: 15, url: 'img/15.jpg', keywords: ['funny', 'cat'] },
-    { id: 16, url: 'img/16.jpg', keywords: ['funny', 'cat'] },
-    { id: 17, url: 'img/17.jpg', keywords: ['funny', 'cat'] },
-    { id: 18, url: 'img/18.jpg', keywords: ['funny', 'cat'] },
+    { id: 1, url: 'img/1.jpg', keywords: ['politician', 'angry', 'trump', 'funny'] },
+    { id: 2, url: 'img/2.jpg', keywords: ['dog', 'cute', 'love', 'funny'] },
+    { id: 3, url: 'img/3.jpg', keywords: ['dog', 'baby', 'sleep', 'funny', 'cute'] },
+    { id: 4, url: 'img/4.jpg', keywords: ['cat', 'Computer', 'sleep', 'funny', 'cute'] },
+    { id: 5, url: 'img/5.jpg', keywords: ['baby', 'funny', 'victory', 'cute'] },
+    { id: 6, url: 'img/6.jpg', keywords: ['funny', 'history', 'explain', 'smile'] },
+    { id: 7, url: 'img/7.jpg', keywords: ['funny', 'baby', 'surprise', 'smile'] },
+    { id: 8, url: 'img/8.jpg', keywords: ['funny', 'listen', 'judge', 'surprise', 'smile'] },
+    { id: 9, url: 'img/9.jpg', keywords: ['funny', 'baby', 'Laughing', 'smile'] },
+    { id: 10, url: 'img/10.jpg', keywords: ['funny', 'smile', 'politician', 'obama'] },
+    { id: 11, url: 'img/11.jpg', keywords: ['funny', 'sports', 'gay', 'fighting', 'angry'] },
+    { id: 12, url: 'img/12.jpg', keywords: ['funny', 'you', 'judge', 'guilty'] },
+    { id: 13, url: 'img/13.jpg', keywords: ['funny', 'cheers', 'actor', 'invite', 'you'] },
+    { id: 14, url: 'img/14.jpg', keywords: ['funny', 'surprise', 'serious', 'glasses', 'judge'] },
+    { id: 15, url: 'img/15.jpg', keywords: ['funny', 'explain'] },
+    { id: 16, url: 'img/16.jpg', keywords: ['funny', 'smile', 'crying', 'surprise'] },
+    { id: 17, url: 'img/17.jpg', keywords: ['funny', 'putin', 'serious', 'politician', 'angry', 'threat'] },
+    { id: 18, url: 'img/18.jpg', keywords: ['funny', 'toy', 'children', 'look', 'surprise', 'explain'] },
 ];
 var gMeme = {
     selectedImgId: 5,
@@ -29,18 +32,18 @@ var gMeme = {
         size: 40,
         align: 'left',
         color: 'white',
-        isStroke: true
+        stroke: 'black'
     }]
 };
 
-function createLine(txt) {
+function createLine(txt, font = 'Impact', size = 40, align = 'left', color = 'white', stroke = 'black') {
     return {
-        font: 'Impact',
         txt,
-        size: 40,
-        align: 'left',
-        color: 'white',
-        isStroke: true
+        font,
+        size,
+        align,
+        color,
+        stroke
     }
 }
 
@@ -93,7 +96,7 @@ function addLine(txt) {
 }
 
 function setStroke() {
-    gMeme.lines[gMeme.selectedLineIdx].isStroke = !gMeme.lines[gMeme.selectedLineIdx].isStroke;
+    gMeme.lines[gMeme.selectedLineIdx].stroke = document.getElementById('stroke-color').value;
     renderMeme();
 }
 
@@ -145,4 +148,75 @@ function moveLine(dx, dy) {
 function clearFocus() {
     gMeme.selectedLineIdx = 100;
     renderMeme();
+}
+
+function setRandomMeme() {
+    clearGallery();
+    var gElMemeEditor = document.querySelector('.meme-editor')
+    gElMemeEditor.classList.remove('hide');
+    gMeme.selectedImgId = getRandomIntInclusive(0, (gImgs.length - 1));
+    gMeme.selectedLineIdx = 0;
+    if ((getRandomIntInclusive(0, 100)) > 50) {
+        gMeme.lines = [
+            createLine(makeLorem(7), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor()),
+            createLine(makeLorem(7), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor())
+        ]
+    } else gMeme.lines = [createLine(makeLorem(10), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor())]
+
+    renderMeme();
+}
+
+function saveMemeToStorage() {
+    var memes = loadFromStorage(STORAGE_KEY);
+    if (!memes || memes.length === 0) memes = [];
+    memes.push(gMeme);
+    saveToStorage(STORAGE_KEY, memes);
+}
+
+function getFilteredImgs() {
+    var val = document.querySelector('.search-input').value;
+    var lowerVal = val.toLowerCase();
+    var filteredImgs = gImgs.filter((img) => img.keywords.includes(lowerVal));
+    return filteredImgs;
+}
+
+function resetMeme() {
+    gMeme = {
+        selectedImgId: 5,
+        selectedLineIdx: 0,
+        lines: [{
+            font: 'Impact',
+            txt: 'MEME GENERATOR',
+            size: 40,
+            align: 'left',
+            color: 'white',
+            stroke: 'black'
+        }]
+    };
+}
+
+function renderStickers() {
+    const startIdx = gStickerPageIdx * gStickerPageSize
+    var stickers = gStickers.slice(startIdx, startIdx + gStickerPageSize)
+    var strHtml = '';
+    stickers.forEach((sticker) => {
+        strHtml += `<div>${sticker}</div>`
+    })
+    document.querySelector('.stickers').innerHTML = strHtml;
+}
+
+function setNextPage() {
+    gStickerPageIdx++
+    if (gStickerPageIdx * gStickerPageSize >= gStickers.length) {
+        gStickerPageIdx = 0;
+    }
+    renderStickers();
+}
+
+function setPrevPage() {
+    gStickerPageIdx--
+    if (gStickerPageIdx * gStickerPageSize <= 0) {
+        gStickerPageIdx = 0;
+    }
+    renderStickers();
 }

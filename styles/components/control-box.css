@@ -67,6 +67,11 @@
     grid-column: 1 / 4;
     grid-row: 6;
     border-radius: .6rem;
+    transition: background-color .3s;
+}
+
+#font-fam:hover {
+    background-color: rgb(236, 207, 207);
 }
 
 .txt-stroke {
@@ -93,6 +98,11 @@ input[type="color"] {
     grid-column: 1 / 6;
     grid-row: 7 / 9;
     background-color: white;
+    gap: 1rem;
+}
+
+.stickers {
+    gap: .5rem;
 }
 
 .btn-2 {
@@ -104,4 +114,20 @@ input[type="color"] {
     grid-row: 9;
     cursor: pointer;
     font-size: 1.17em;
+    transition: all .3s;
+}
+
+.btn-2:hover {
+    background-color: #964519;
+    color: white;
+}
+
+.btn:hover {
+    background-color: rgb(236, 207, 207);
+    border: 3px solid rgb(236, 207, 207);
+}
+
+.sticker-pagination {
+    font-size: 40px;
+    cursor: pointer;
 }

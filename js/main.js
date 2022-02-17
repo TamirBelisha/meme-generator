@@ -1,5 +1,6 @@
 'use strict';
 var gElMemeEditor = document.querySelector('.meme-editor')
+var isFilterOn = false;
 
 function onInit() {
     renderGallery();
@@ -8,7 +9,7 @@ function onInit() {
 
 function renderGallery() {
     const elGallery = document.querySelector('.gallery-container');
-    const images = getMemeImgs();
+    const images = (isFilterOn) ? getFilteredImgs() : getMemeImgs();
     elGallery.innerHTML = '';
     images.forEach(el => {
         elGallery.innerHTML += `
@@ -16,7 +17,8 @@ function renderGallery() {
         `
     })
     gElMemeEditor.classList.add('hide');
-
+    isFilterOn = false;
+    resetMeme();
 }
 
 function clearGallery() {
@@ -28,4 +30,20 @@ function onImgSelect(id) {
     setImg(id);
     clearGallery();
     gElMemeEditor.classList.remove('hide');
+}
+
+function setFilterBy(ev) {
+    ev.preventDefault();
+    var val = document.querySelector('.search-input').value;
+    isFilterOn = (val) ? true : false;
+    renderGallery();
+}
+
+function setFilterByWord(el, key) {
+    var style = window.getComputedStyle(el, null).getPropertyValue('font-size');
+    var fontSize = parseFloat(style);
+    el.style.fontSize = fontSize + 3 + 'px'
+    document.querySelector('.search-input').value = key;
+    isFilterOn = true;
+    renderGallery()
 }

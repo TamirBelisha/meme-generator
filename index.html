@@ -11,18 +11,40 @@
 
 <body onload="onInit()">
     <header class="main-header flex align-center space-between">
-        <div class="logo"></div>
+        <div class="logo" onclick="onInit()"></div>
         <nav class="nav-container flex">
             <a href="#" onclick="renderGallery()">Gallery</a>
-            <a href="#">About</a>
+            <a href="#">Memes</a>
+            <a href="https://tamirbelisha.github.io/my-gallery/" target="_blank">About</a>
         </nav>
     </header>
     <main class="main-container flex col">
-        <section class="search-container">
-            <input type="text" placeholder="Search">
-            <i class="search-icon"></i>
-            <div class="keywords">
+        <section class="search-container flex align-center space-between">
+            <div class="flex align-center">
+                <form onsubmit="setFilterBy(event)">
+                    <input type="text" list="keywords" placeholder="Search" class="search-input" name="search-input">
+                    <datalist id="keywords">
+                        <option value="Funny">
+                        <option value="Dog">
+                        <option value="Baby">
+                        <option value="Victory">
+                        <option value="Surprise">                    
+                        <option value="Politician">                    
+                    </datalist>
+                    <i class="search-icon">
+                    <input type="submit" class="no-opacity">
+                    </i>
+                </form>
             </div>
+            <div class="keywords flex align-center">
+                <div onclick="setFilterByWord(this, 'Dog')">Dog</div>
+                <div onclick="setFilterByWord(this, 'Funny')" class="funny-key">Funny</div>
+                <div onclick="setFilterByWord(this, 'Baby')">Baby</div>
+                <div onclick="setFilterByWord(this, 'Surprise')" class="surprise-key">Surprise</div>
+                <div onclick="setFilterByWord(this, 'Politician')" class="politician-key">Politician</div>
+                <div onclick="setFilterByWord(this, 'Victory')">Victory</div>
+            </div>
+            <button onclick="onSetRandomMeme()" class="btn-flexible">I'm flexible</button>
         </section>
         <section class="gallery-container d-none">
         </section>
@@ -43,23 +65,31 @@
                     <option value="mukta">Mukta</option>
                     <option value="arial">Arial</option>
                 </select>
-                <button class="btn txt-stroke" onclick="onSetStroke()"></button>
+                <button class="btn txt-stroke">
+                    <input type="color" class="btn" id="stroke-color" onchange="onSetStroke()">
+                </button>
                 <button class="btn txt-color">
                     <input type="color" class="btn" id="txt-color" onchange="onSetColor()">
                 </button>
-                <section class="sticker-container">
+                <section class="sticker-container flex space-between align-center">
+                    <div class="sticker-pagination" onclick="setPrevPage()">←</div>
+                    <div class="stickers flex align-center">
 
+                    </div>
+                    <div class="sticker-pagination" onclick="setNextPage()">→</div>
                 </section>
                 <button class="btn-2">Share</button>
             </section>
         </section>
     </main>
     <footer class="footer-container flex align-center col">
-        <div class="logo"></div>
-        <div class="copyrights"></div>
+        <div class="logo footer-logo"></div>
+        <div class="copyrights">All rights reserved ©</div>
     </footer>
 
 
+    <script src="js/services/storage-service.js"></script>
+    <script src="js/services/util-service.js"></script>
     <script src="js/services/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
     <script src="js/main.js"></script>

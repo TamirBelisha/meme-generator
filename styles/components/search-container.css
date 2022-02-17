@@ -1,5 +1,65 @@
 .search-container {
     height: 10vh;
     width: 100%;
-    background-color: antiquewhite;
+    padding: 15px;
+}
+
+.search-icon {
+    height: 35px;
+    width: 35px;
+    background-image: url(../../img/icons/search-icon.png);
+    background-size: cover;
+    cursor: pointer;
+}
+
+.search-input {
+    height: 40px;
+    width: 200px;
+}
+
+.btn-flexible {
+    border: 1px solid rgb(63, 3, 3);
+    border-radius: 1rem;
+    background-color: rgb(107, 14, 14);
+    color: antiquewhite;
+    height: 3rem;
+    width: 6rem;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.btn-flexible:hover {
+    background-color: rgb(63, 3, 3);
+}
+
+.no-opacity {
+    opacity: 0;
+    height: 30px;
+    width: 30px;
+}
+
+.keywords {
+    justify-content: baseline;
+    gap: 1rem;
+    font-size: 1.3rem;
+}
+
+.keywords>* {
+    cursor: pointer;
+}
+
+.keywords>*:hover {
+    color: var(--clr2)
+}
+
+.funny-key {
+    font-size: 1.6rem;
+}
+
+.surprise-key {
+    font-size: 1.1rem;
+}
+
+.politician-key {
+    font-size: 1.6rem;
 }

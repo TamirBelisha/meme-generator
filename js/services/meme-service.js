@@ -128,6 +128,8 @@ function deleteLine() {
 
 function isLineClicked(pos) {
     var isTrue = false;
+    console.log('got here', pos, gMeme);
+
     gMeme.lines.forEach((line, idx) => {
         if (pos.x > line.pos.x && pos.x < (line.pos.x + line.pos.xLength) && pos.y > line.pos.y && pos.y < (line.pos.y + line.size)) {
             gMeme.selectedLineIdx = idx;
@@ -195,12 +197,19 @@ function resetMeme() {
     };
 }
 
+function setStickerLine(sticker) {
+    var line = createLine(sticker);
+    line.type = 'sticker';
+    gMeme.lines.push(line);
+    renderMeme();
+}
+
 function renderStickers() {
     const startIdx = gStickerPageIdx * gStickerPageSize
     var stickers = gStickers.slice(startIdx, startIdx + gStickerPageSize)
     var strHtml = '';
     stickers.forEach((sticker) => {
-        strHtml += `<div>${sticker}</div>`
+        strHtml += `<div onclick="setStickerLine('${sticker}')">${sticker}</div>`
     })
     document.querySelector('.stickers').innerHTML = strHtml;
 }
@@ -220,3 +229,33 @@ function setPrevPage() {
     }
     renderStickers();
 }
+
+function saveMemeUrl(url) {
+    gMeme.memeUrl = url;
+    saveMemeToStorage();
+}
+
+/////////////////////////////////////
+
+
+
+// function onImgInput(ev) {
+//     loadImageFromInput(ev, renderImg)
+// }
+
+// function loadImageFromInput(ev, onImageReady) {
+//     document.querySelector('.share-container').innerHTML = ''
+//     document.querySelector('.user-msg').innerHTML = ''
+//     var reader = new FileReader()
+
+//     reader.onload = function(event) {
+//         console.log('onload');
+//         var img = new Image()
+//             // Render on canvas
+//         img.onload = onImageReady.bind(null, img)
+//         img.src = event.target.result
+//         gImg = img
+//         console.log('onload');
+//     }
+//     reader.readAsDataURL(ev.target.files[0])
+// }

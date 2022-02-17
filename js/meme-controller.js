@@ -12,8 +12,7 @@ function initMeme() {
 }
 
 function renderMeme() {
-    renderStickers()
-
+    renderStickers();
     const meme = getMeme();
     const images = getMemeImgs();
     drawImg(images[(meme.selectedImgId - 1)].url);
@@ -31,7 +30,11 @@ function drawText() {
         gCtx.fillStyle = line.color;
         gCtx.font = `${line.size}px ${line.font}`;
         var txt = gCtx.measureText(line.txt)
-        if (!line.pos && idx === 0) {
+        if (line.type === 'sticker' && !line.pos) {
+            gCtx.fillText(line.txt, 250, 250);
+            line.pos = { x: 250, y: 250 };
+            gCtx.strokeText(line.txt, 250, 250);
+        } else if (!line.pos && idx === 0) {
             gCtx.fillText(line.txt, 50, 50);
             line.pos = { x: 50, y: 50 };
             gCtx.strokeText(line.txt, 50, 50);
@@ -117,6 +120,10 @@ function addMouseListeners() {
     gElCanvas.addEventListener('mousemove', onMove);
     gElCanvas.addEventListener('mousedown', onDown);
     gElCanvas.addEventListener('mouseup', onUp);
+    // window.addEventListener('resize', () => {
+    //     resizeCanvas()
+    //     renderMeme()
+    // })
 }
 
 function onDown(ev) {
@@ -162,4 +169,73 @@ function getEvPos(ev) {
     //     }
     // }
     return pos
+}
+
+function resizeCanvas() {
+    var elContainer = document.querySelector('.meme-editor');
+    gElCanvas.width = elContainer.offsetWidth / 2
+        // gCanvas.height = elContainer.offsetHeight
+}
+
+function handleShare(el) {
+    var val = el.value;
+    switch (val) {
+        case 'Download':
+            downloadCanvas();
+            break;
+        case 'Share':
+            uploadImg();
+            break;
+        case 'Save':
+            uploadImg('Save');
+        default:
+            break;
+    }
+}
+
+function downloadCanvas() {
+    document.querySelector('.links-container').innerHTML = `
+    <a href="#" download="myphoto" class="links flex align-center"></a>`
+    const data = gElCanvas.toDataURL();
+    var elLink = document.querySelector('.links')
+    elLink.href = data;
+    elLink.download = 'My-Canvas';
+    elLink.innerText = 'Download';
+}
+
+function uploadImg(key) {
+    const imgDataUrl = gElCanvas.toDataURL("image/jpeg");
+
+    // A function to be called if request succeeds
+    function onSuccess(uploadedImgUrl) {
+        const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        if (key === 'Save') {
+            document.querySelector('.links-container').innerHTML = `<a href="${uploadedImgUrl}">Saved!</a>`
+            saveMemeUrl(imgDataUrl);
+        } else document.querySelector('.links-container').innerHTML = `
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
+           Share   
+        </a>`
+    }
+
+    doUploadImg(imgDataUrl, onSuccess);
+}
+
+function doUploadImg(imgDataUrl, onSuccess) {
+
+    const formData = new FormData();
+    formData.append('img', imgDataUrl)
+
+    fetch('//ca-upload.com/here/upload.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.text())
+        .then((url) => {
+            console.log('Got back live url:', url);
+            onSuccess(url)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
 }

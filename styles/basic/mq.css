@@ -1,0 +1,14 @@
+@media (max-width: 860px) {
+    .meme-editor {
+        flex-direction: column;
+    }
+    .control-box {
+        height: 487px;
+        width: 280px;
+    }
+    .meme-editor {
+        height: unset !important;
+        width: unset !important;
+        align-items: center;
+    }
+}

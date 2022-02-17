@@ -14,7 +14,7 @@
         <div class="logo" onclick="onInit()"></div>
         <nav class="nav-container flex">
             <a href="#" onclick="renderGallery()">Gallery</a>
-            <a href="#">Memes</a>
+            <a href="#" onclick="renderMyMemes()">Memes</a>
             <a href="https://tamirbelisha.github.io/my-gallery/" target="_blank">About</a>
         </nav>
     </header>
@@ -49,7 +49,9 @@
         <section class="gallery-container d-none">
         </section>
         <section class="meme-editor flex">
-            <canvas id="meme-canvas" height="500" width="500"></canvas>
+            <div class="canvas-container">
+                <canvas id="meme-canvas" height="500" width="500"></canvas>
+            </div>
             <section class="control-box">
                 <input type="text" placeholder="MEME GENERATOR" class="txt-input" onkeyup="onSetLineTxt()">
                 <button class="btn move-line" onclick="onChangeLine()"></button>
@@ -78,7 +80,13 @@
                     </div>
                     <div class="sticker-pagination" onclick="setNextPage()">→</div>
                 </section>
-                <button class="btn-2">Share</button>
+                <div class="links-container flex align-center">
+                </div>
+                <select name="share" id="share" class="btn-2" onchange="handleShare(this)">
+                        <option value="Share">Share</option>
+                        <option value="Download">Download</option>
+                        <option value="Save">Save</option>
+                    </select>
             </section>
         </section>
     </main>

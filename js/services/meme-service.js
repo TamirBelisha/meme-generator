@@ -47,6 +47,14 @@ function createLine(txt, font = 'Impact', size = 40, align = 'left', color = 'wh
     }
 }
 
+function onMemeSelected(idx) {
+    var memes = loadFromStorage(STORAGE_KEY)
+    gMeme = memes[idx];
+    clearGallery();
+    document.querySelector('.meme-editor').classList.remove('hide');
+    renderMeme();
+}
+
 function getMeme() {
     return gMeme;
 }
@@ -234,28 +242,3 @@ function saveMemeUrl(url) {
     gMeme.memeUrl = url;
     saveMemeToStorage();
 }
-
-/////////////////////////////////////
-
-
-
-// function onImgInput(ev) {
-//     loadImageFromInput(ev, renderImg)
-// }
-
-// function loadImageFromInput(ev, onImageReady) {
-//     document.querySelector('.share-container').innerHTML = ''
-//     document.querySelector('.user-msg').innerHTML = ''
-//     var reader = new FileReader()
-
-//     reader.onload = function(event) {
-//         console.log('onload');
-//         var img = new Image()
-//             // Render on canvas
-//         img.onload = onImageReady.bind(null, img)
-//         img.src = event.target.result
-//         gImg = img
-//         console.log('onload');
-//     }
-//     reader.readAsDataURL(ev.target.files[0])
-// }

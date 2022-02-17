@@ -56,10 +56,8 @@ function renderMyMemes() {
         elGallery.innerHTML += `
         <img src="${el.memeUrl}" onclick="onMemeSelected(${idx})">
         `
-        console.log('el.memeUrl', el.memeUrl);
     })
     gElMemeEditor.classList.add('hide');
     isFilterOn = false;
     resetMeme();
-
 }

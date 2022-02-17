@@ -150,3 +150,10 @@ input[type="color"] {
     font-size: 40px;
     cursor: pointer;
 }
+
+.upload-btn {
+    border: 0;
+    background-color: unset;
+    grid-column: 1/ 6;
+    grid-row: 1;
+}

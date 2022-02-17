@@ -53,6 +53,7 @@
                 <canvas id="meme-canvas" height="500" width="500"></canvas>
             </div>
             <section class="control-box">
+                <input type="file" class="file-input upload-btn" name="image" onchange="onImgInput(event)" />
                 <input type="text" placeholder="MEME GENERATOR" class="txt-input" onkeyup="onSetLineTxt()">
                 <button class="btn move-line" onclick="onChangeLine()"></button>
                 <button class="btn add-line" onclick="onAddLine()"></button>
@@ -100,7 +101,7 @@
     <script src="js/services/util-service.js"></script>
     <script src="js/services/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/gallery-controller.js"></script>
 </body>
 
 </html>

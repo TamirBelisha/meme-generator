@@ -67,9 +67,11 @@ function drawFocus(x, y, xLength, yLength) {
 
 function drawImg(src) {
     var img = new Image();
+    var screenWidth = window.innerWidth;
+    var maxWidth = (screenWidth > 500) ? 500 : (screenWidth - 50)
     img.onload = () => {
-        var canvasHeight = (img.height * 750) / img.width;
-        gElCanvas.width = 750;
+        var canvasHeight = (img.height * maxWidth) / img.width;
+        gElCanvas.width = maxWidth;
         gElCanvas.height = canvasHeight;
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
         drawText()
@@ -121,15 +123,10 @@ function onDeleteLine() {
     deleteLine();
 }
 
-
 function addMouseListeners() {
     gElCanvas.addEventListener('mousemove', onMove);
     gElCanvas.addEventListener('mousedown', onDown);
     gElCanvas.addEventListener('mouseup', onUp);
-    // window.addEventListener('resize', () => {
-    //     resizeCanvas()
-    //     renderMeme()
-    // })
 }
 
 function addTouchListeners() {
@@ -141,7 +138,7 @@ function addTouchListeners() {
 function onDown(ev) {
     ev.preventDefault();
     const pos = getEvPos(ev);
-    if (!isLineClicked(pos)) {
+    if (!isLineClicked(pos, ev)) {
         var res = document.getElementById('txt-input');
         res.blur();
         clearFocus();

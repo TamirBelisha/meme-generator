@@ -23,7 +23,4 @@
         grid-template-columns: unset !important;
         grid-template-rows: unset !important;
     }
-    #meme-canvas {
-        max-width: 86vw !important;
-    }
 }

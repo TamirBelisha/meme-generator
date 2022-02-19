@@ -141,15 +141,14 @@ function deleteLine() {
 
 
 
-function isLineClicked(pos) {
+function isLineClicked(pos, ev) {
     var isTrue = false;
-
     gMeme.lines.forEach((line, idx) => {
         if (pos.x > line.pos.x && pos.x < (line.pos.x + line.pos.xLength) && pos.y > line.pos.y && pos.y < (line.pos.y + line.size)) {
             gMeme.selectedLineIdx = idx;
+            var input = document.getElementById('txt-input');
+            input.focus();
 
-            var res = document.getElementById('txt-input');
-            res.focus();
             renderMeme();
             isTrue = true;
         }

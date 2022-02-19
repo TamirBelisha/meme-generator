@@ -22,6 +22,13 @@ var gImgs = [
     { id: 16, url: 'img/16.jpg', keywords: ['funny', 'smile', 'crying', 'surprise'] },
     { id: 17, url: 'img/17.jpg', keywords: ['funny', 'putin', 'serious', 'politician', 'angry', 'threat'] },
     { id: 18, url: 'img/18.jpg', keywords: ['funny', 'toy', 'children', 'look', 'surprise', 'explain'] },
+    { id: 19, url: 'img/19.jpg', keywords: ['funny', 'angry', 'yelling', 'haircut'] },
+    { id: 20, url: 'img/20.jpg', keywords: ['funny', 'swiss', 'snow', 'winter', 'lady', 'mountain', 'green'] },
+    { id: 21, url: 'img/21.jpg', keywords: ['funny', 'qoute', 'drevil', 'surprise', 'finger'] },
+    { id: 22, url: 'img/22.jpg', keywords: ['funny', 'baby', 'dancing', 'dance', 'victory', 'smile'] },
+    { id: 23, url: 'img/23.jpg', keywords: ['funny', 'trump', 'politician', 'finger', 'angry', 'speech'] },
+    { id: 24, url: 'img/24.jpg', keywords: ['funny', 'dog', 'laying', 'look'] },
+    { id: 25, url: 'img/25.jpg', keywords: ['funny', 'lady', 'singer', 'yelling', 'crowd', 'stage'] },
 ];
 var gMeme = {
     selectedImgId: 5,
@@ -136,11 +143,13 @@ function deleteLine() {
 
 function isLineClicked(pos) {
     var isTrue = false;
-    console.log('got here', pos, gMeme);
 
     gMeme.lines.forEach((line, idx) => {
         if (pos.x > line.pos.x && pos.x < (line.pos.x + line.pos.xLength) && pos.y > line.pos.y && pos.y < (line.pos.y + line.size)) {
             gMeme.selectedLineIdx = idx;
+
+            var res = document.getElementById('txt-input');
+            res.focus();
             renderMeme();
             isTrue = true;
         }

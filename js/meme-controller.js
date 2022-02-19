@@ -1,13 +1,16 @@
 'use strict';
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 var gElCanvas;
 var gCtx;
 var gStartPos;
 var gIsDrag = false;
 
+
 function initMeme() {
     gElCanvas = document.getElementById('meme-canvas');
     gCtx = gElCanvas.getContext('2d');
     addMouseListeners();
+    addTouchListeners();
     resetMeme();
 }
 
@@ -65,6 +68,9 @@ function drawFocus(x, y, xLength, yLength) {
 function drawImg(src) {
     var img = new Image();
     img.onload = () => {
+        var canvasHeight = (img.height * 500) / img.width;
+        gElCanvas.width = 500;
+        gElCanvas.height = canvasHeight;
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
         drawText()
     };
@@ -126,9 +132,18 @@ function addMouseListeners() {
     // })
 }
 
+function addTouchListeners() {
+    gElCanvas.addEventListener('touchmove', onMove)
+    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchend', onUp)
+}
+
 function onDown(ev) {
+    ev.preventDefault();
     const pos = getEvPos(ev);
     if (!isLineClicked(pos)) {
+        var res = document.getElementById('txt-input');
+        res.blur();
         clearFocus();
         return;
     }
@@ -160,14 +175,14 @@ function getEvPos(ev) {
         y: ev.offsetY
     }
 
-    // if (gTouchEvs.includes(ev.type)) {
-    //     ev.preventDefault()
-    //     ev = ev.changedTouches[0]
-    //     pos = {
-    //         x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-    //         y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
-    //     }
-    // }
+    if (gTouchEvs.includes(ev.type)) {
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+        }
+    }
     return pos
 }
 

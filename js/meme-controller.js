@@ -68,7 +68,8 @@ function drawFocus(x, y, xLength, yLength) {
 function drawImg(src) {
     var img = new Image();
     var screenWidth = window.innerWidth;
-    var maxWidth = (screenWidth > 500) ? 500 : (screenWidth - 50)
+    var maxWidth = (screenWidth > 800) ? 550 : (screenWidth - 50)
+    console.log('maxWidth', maxWidth);
     img.onload = () => {
         var canvasHeight = (img.height * maxWidth) / img.width;
         gElCanvas.width = maxWidth;

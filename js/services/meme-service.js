@@ -168,10 +168,10 @@ function setRandomMeme() {
     gMeme.selectedLineIdx = 0;
     if ((getRandomIntInclusive(0, 100)) > 50) {
         gMeme.lines = [
-            createLine(makeLorem(7), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor()),
-            createLine(makeLorem(7), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor())
+            createLine(makeLorem(4), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor()),
+            createLine(makeLorem(4), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor())
         ]
-    } else gMeme.lines = [createLine(makeLorem(10), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor())]
+    } else gMeme.lines = [createLine(makeLorem(4), 'Impact', getRandomIntInclusive(16, 50), 'left', getRandomColor(), getRandomColor())]
 
     renderMeme();
 }

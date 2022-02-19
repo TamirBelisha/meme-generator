@@ -13,7 +13,7 @@ function renderGallery() {
     elGallery.innerHTML = '';
     images.forEach(el => {
         elGallery.innerHTML += `
-        <img src="img/${el.id}.jpg" onclick="onImgSelect(${el.id})">
+        <img src="img/${el.id}.jpg" class="img-item" onclick="onImgSelect(${el.id})">
         `
     })
     gElMemeEditor.classList.add('hide');

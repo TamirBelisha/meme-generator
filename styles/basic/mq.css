@@ -15,4 +15,21 @@
         flex-direction: column;
         height: unset !important;
     }
+    .keywords {
+        gap: 2px !important;
+    }
+    .img-item {
+        max-width: 45vw;
+    }
+    .control-box {
+        width: 100%;
+        grid-template-columns: unset !important;
+        grid-template-rows: unset !important;
+    }
+}
+
+@media (max-width: 860px) {
+    .img-item {
+        max-width: unset;
+    }
 }

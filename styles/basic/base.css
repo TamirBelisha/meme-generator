@@ -8,6 +8,10 @@ body {
     background-color: antiquewhite;
 }
 
+body.rtl {
+    direction: rtl;
+}
+
 h1,
 h2,
 h3,

@@ -5,3 +5,8 @@
     padding: 1.875rem;
     background-color: antiquewhite;
 }
+
+.canvas-container {
+    align-self: center;
+    direction: ltr;
+}

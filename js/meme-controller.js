@@ -215,21 +215,23 @@ function downloadCanvas() {
     var elLink = document.querySelector('.links')
     elLink.href = data;
     elLink.download = 'My-Canvas';
-    elLink.innerText = 'Download';
+    elLink.innerText = (getCurrLang() === 'en') ? 'Download' : 'הורד';
 }
 
 function uploadImg(key) {
     const imgDataUrl = gElCanvas.toDataURL("image/jpeg");
+    var txt = (getCurrLang() === 'en') ? 'Share' : 'שתף';
+    var txt2 = (getCurrLang() === 'en') ? 'Saved!' : 'נשמר!';
 
     // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {
         const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
         if (key === 'Save') {
-            document.querySelector('.links-container').innerHTML = `<a href="${uploadedImgUrl}">Saved!</a>`
+            document.querySelector('.links-container').innerHTML = `<a href="${uploadedImgUrl}">${txt2}</a>`
             saveMemeUrl(imgDataUrl);
         } else document.querySelector('.links-container').innerHTML = `
         <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
-           Share   
+           ${txt}   
         </a>`
     }
 

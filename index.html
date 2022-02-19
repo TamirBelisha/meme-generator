@@ -12,10 +12,14 @@
 <body onload="onInit()">
     <header class="main-header flex align-center space-between">
         <div class="logo" onclick="onInit()"></div>
+        <div class="trans-container flex">
+            <a href="#" onclick="onSetLang('en')">EN</a>
+            <a href="#" onclick="onSetLang('he')">HE</a>
+        </div>
         <nav class="nav-container flex">
-            <a href="#" onclick="renderGallery()">Gallery</a>
-            <a href="#" onclick="renderMyMemes()">Memes</a>
-            <a href="https://tamirbelisha.github.io/my-gallery/" target="_blank">About</a>
+            <a href="#" data-trans="gallery-tab" onclick="renderGallery()">Gallery</a>
+            <a href="#" data-trans="memes-tab" onclick="renderMyMemes()">Memes</a>
+            <a href="https://tamirbelisha.github.io/my-gallery/" data-trans="about-tab" target="_blank">About</a>
         </nav>
     </header>
     <main class="main-container flex col">
@@ -37,14 +41,14 @@
                 </form>
             </div>
             <div class="keywords flex align-center">
-                <div onclick="setFilterByWord(this, 'Dog')">Dog</div>
-                <div onclick="setFilterByWord(this, 'Funny')" class="funny-key">Funny</div>
-                <div onclick="setFilterByWord(this, 'Baby')">Baby</div>
-                <div onclick="setFilterByWord(this, 'Surprise')" class="surprise-key">Surprise</div>
-                <div onclick="setFilterByWord(this, 'Politician')" class="politician-key">Politician</div>
-                <div onclick="setFilterByWord(this, 'Victory')">Victory</div>
+                <div data-trans="dog-keyword" onclick="setFilterByWord(this, 'Dog')">Dog</div>
+                <div data-trans="funny-keyword" onclick="setFilterByWord(this, 'Funny')" class="funny-key">Funny</div>
+                <div data-trans="baby-keyword" onclick="setFilterByWord(this, 'Baby')">Baby</div>
+                <div data-trans="surprise-keyword" onclick="setFilterByWord(this, 'Surprise')" class="surprise-key">Surprise</div>
+                <div data-trans="politician-keyword" onclick="setFilterByWord(this, 'Politician')" class="politician-key">Politician</div>
+                <div data-trans="victory-keyword" onclick="setFilterByWord(this, 'Victory')">Victory</div>
             </div>
-            <button onclick="onSetRandomMeme()" class="btn-flexible">I'm flexible</button>
+            <button onclick="onSetRandomMeme()" data-trans="im-flexible" class="btn-flexible">I'm flexible</button>
         </section>
         <section class="gallery-container d-none">
         </section>
@@ -84,9 +88,9 @@
                 <div class="links-container flex align-center">
                 </div>
                 <select name="share" id="share" class="btn-2" onchange="handleShare(this)">
-                        <option value="Share">Share</option>
-                        <option value="Download">Download</option>
-                        <option value="Save">Save</option>
+                        <option data-trans="share" value="Share">Share</option>
+                        <option data-trans="download" value="Download">Download</option>
+                        <option data-trans="save" value="Save">Save</option>
                     </select>
             </section>
         </section>
@@ -98,6 +102,7 @@
 
 
     <script src="js/services/storage-service.js"></script>
+    <script src="js/services/i18n-service.js"></script>
     <script src="js/services/util-service.js"></script>
     <script src="js/services/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>

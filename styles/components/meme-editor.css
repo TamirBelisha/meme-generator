@@ -9,3 +9,8 @@
     align-self: center;
     direction: ltr;
 }
+
+#meme-canvas {
+    max-width: 60vw;
+    max-height: 485px;
+}

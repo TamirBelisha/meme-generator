@@ -68,8 +68,8 @@ function drawFocus(x, y, xLength, yLength) {
 function drawImg(src) {
     var img = new Image();
     img.onload = () => {
-        var canvasHeight = (img.height * 500) / img.width;
-        gElCanvas.width = 500;
+        var canvasHeight = (img.height * 750) / img.width;
+        gElCanvas.width = 750;
         gElCanvas.height = canvasHeight;
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
         drawText()

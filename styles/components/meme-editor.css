@@ -1,8 +1,9 @@
 .meme-editor {
-    justify-content: space-around;
+    justify-content: center;
     height: 60vh;
     width: 100vw;
     padding: 1.875rem;
+    gap: 100px;
 }
 
 .canvas-container {

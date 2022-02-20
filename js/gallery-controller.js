@@ -10,11 +10,18 @@ function onInit() {
 function renderGallery() {
     const elGallery = document.querySelector('.gallery-container');
     const images = (isFilterOn) ? getFilteredImgs() : getMemeImgs();
+    if (images.length === 0) return
     elGallery.innerHTML = '';
-    images.forEach(el => {
-        elGallery.innerHTML += `
-        <img src="img/${el.id}.jpg" class="img-item" onclick="onImgSelect(${el.id})">
-        `
+    images.forEach(img => {
+        if (img.id <= 25) {
+            elGallery.innerHTML += `
+            <img src="img/${img.id}.jpg" class="img-item" onclick="onImgSelect(${img.id})">
+            `
+        } else {
+            elGallery.innerHTML += `
+            <img src="${img.url}" class="img-item" onclick="onImgSelect(${img.id})">
+            `
+        }
     })
     gElMemeEditor.classList.add('hide');
     isFilterOn = false;
@@ -51,6 +58,7 @@ function setFilterByWord(el, key) {
 function renderMyMemes() {
     const elGallery = document.querySelector('.gallery-container');
     const memes = loadFromStorage('memesDB');
+    if (!memes || memes.length === 0) return;
     elGallery.innerHTML = '';
     memes.forEach((el, idx) => {
         elGallery.innerHTML += `

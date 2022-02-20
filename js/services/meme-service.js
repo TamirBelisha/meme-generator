@@ -1,5 +1,6 @@
 'use strict';
 const STORAGE_KEY = 'memesDB';
+const STORAGE_IMG_KEY = 'imgsDB';
 const gStickerPageSize = 5;
 var gStickers = ['👙', '👓', '👚', '💍', '👑', '👛', '👜', '👝', '🎒', '👞', '👟', '💼', '👒', '🎩', '🎓']
 var gStickerPageIdx = 0;
@@ -67,7 +68,23 @@ function getMeme() {
 }
 
 function getMemeImgs() {
-    return gImgs;
+    var imgs = loadFromStorage(STORAGE_IMG_KEY);
+    if (!imgs || imgs.length === 0) {
+        imgs = gImgs
+    }
+    return imgs;
+}
+
+function createImgObject(url) {
+    var imgs = getMemeImgs();
+    var image = {
+        id: (imgs.length + 1),
+        url
+    }
+    gMeme.selectedImgId = image.id;
+    imgs.push(image);
+    saveToStorage(STORAGE_IMG_KEY, imgs)
+    renderMeme();
 }
 
 function setFontFamily() {
@@ -198,7 +215,12 @@ function saveMemeToStorage() {
 function getFilteredImgs() {
     var val = document.querySelector('.search-input').value;
     var lowerVal = val.toLowerCase();
-    var filteredImgs = gImgs.filter((img) => img.keywords.includes(lowerVal));
+    var filteredImgs = gImgs.filter(img => {
+        var keywords = img.keywords;
+        for (let i = 0; i < keywords.length; i++) {
+            if (keywords[i].includes(lowerVal)) return img
+        }
+    })
     return filteredImgs;
 }
 

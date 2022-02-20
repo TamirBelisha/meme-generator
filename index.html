@@ -11,7 +11,7 @@
 
 <body onload="onInit()">
     <header class="main-header flex align-center space-between">
-        <div class="logo" onclick="onInit()"></div>
+        <div class="logo" onClick="window.location.reload();"></div>
         <div class="trans-container flex">
             <a href="#" onclick="onSetLang('en')">EN</a>
             <a href="#" onclick="onSetLang('he')">HE</a>
@@ -25,7 +25,7 @@
     <main class="main-container flex col">
         <section class="search-container flex align-center space-between">
             <div class="flex align-center">
-                <form onsubmit="setFilterBy(event)">
+                <form onkeyup="setFilterBy(event)" onclick="setFilterBy(event)">
                     <input type="text" list="keywords" placeholder="Search" class="search-input" name="search-input">
                     <datalist id="keywords">
                         <option value="Funny">
@@ -71,6 +71,8 @@
                     <option value="impact">Impact</option>
                     <option value="mukta">Mukta</option>
                     <option value="arial">Arial</option>
+                    <option value="lobster">Lobster</option>
+                    <option value="bebasneue">Bebas</option>
                 </select>
                 <button class="btn txt-stroke">
                     <input type="color" class="btn" id="stroke-color" onchange="onSetStroke()">

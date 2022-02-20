@@ -26,34 +26,40 @@ function renderMeme() {
 function drawText() {
     const meme = getMeme();
     const lines = meme.lines;
+    const canvasHeight = gElCanvas.height
+    const canvasWidth = gElCanvas.width
     gCtx.textBaseline = 'top';
     lines.forEach((line, idx) => {
         gCtx.lineWidth = 2;
         gCtx.strokeStyle = line.stroke;
         gCtx.fillStyle = line.color;
         gCtx.font = `${line.size}px ${line.font}`;
-        var txt = gCtx.measureText(line.txt)
+        var measuredText = gCtx.measureText(line.txt)
+        if (measuredText.width > (canvasWidth - 50)) {
+            line.size *= 0.8
+            gCtx.font = `${line.size}px ${line.font}`;
+        }
         if (line.type === 'sticker' && !line.pos) {
-            gCtx.fillText(line.txt, 250, 250);
-            line.pos = { x: 250, y: 250 };
-            gCtx.strokeText(line.txt, 250, 250);
+            gCtx.fillText(line.txt, (canvasWidth / 2), (canvasHeight / 2));
+            line.pos = { x: (canvasWidth / 2), y: (canvasHeight / 2) };
+            gCtx.strokeText(line.txt, (canvasWidth / 2), (canvasHeight / 2));
         } else if (!line.pos && idx === 0) {
             gCtx.fillText(line.txt, 50, 50);
             line.pos = { x: 50, y: 50 };
             gCtx.strokeText(line.txt, 50, 50);
         } else if (!line.pos && idx === 1) {
-            gCtx.fillText(line.txt, 50, 450);
-            line.pos = { x: 50, y: 450 };
-            gCtx.strokeText(line.txt, 50, 450);
+            gCtx.fillText(line.txt, 50, (canvasHeight - 50));
+            line.pos = { x: 50, y: (canvasHeight - 50) };
+            gCtx.strokeText(line.txt, 50, (canvasHeight - 50));
         } else if (!line.pos) {
-            gCtx.fillText(line.txt, 50, 250);
-            line.pos = { x: 50, y: 250 };
-            gCtx.strokeText(line.txt, 50, 250);
+            gCtx.fillText(line.txt, 50, (canvasHeight / 2));
+            line.pos = { x: 50, y: (canvasHeight / 2) };
+            gCtx.strokeText(line.txt, 50, (canvasHeight / 2));
         }
-        line.pos.xLength = txt.width;
+        line.pos.xLength = measuredText.width;
         gCtx.fillText(line.txt, line.pos.x, line.pos.y);
         gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
-        if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, txt.width, line.size)
+        if (idx === meme.selectedLineIdx) drawFocus(line.pos.x, line.pos.y, measuredText.width, line.size)
     })
 }
 
@@ -68,10 +74,23 @@ function drawFocus(x, y, xLength, yLength) {
 function drawImg(src) {
     var img = new Image();
     var screenWidth = window.innerWidth;
-    var maxWidth = (screenWidth > 800) ? 550 : (screenWidth - 50)
+    var maxWidth = (screenWidth > 860) ? (screenWidth / 2.2) : (screenWidth - 100)
     console.log('maxWidth', maxWidth);
+    console.log('screenWidth', screenWidth);
     img.onload = () => {
         var canvasHeight = (img.height * maxWidth) / img.width;
+        console.log('canvasHeight', canvasHeight);
+        console.log('img.width', img.width);
+        console.log('img.height', img.height);
+        if (canvasHeight > 485 && screenWidth > 860) {
+            console.log('imHererererererere');
+            maxWidth = (screenWidth / 3)
+            canvasHeight = (img.height * maxWidth) / img.width;
+            if ((img.height >= img.width)) {
+                canvasHeight = 485
+                maxWidth = (img.height * canvasHeight) / img.width;
+            }
+        }
         gElCanvas.width = maxWidth;
         gElCanvas.height = canvasHeight;
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
@@ -128,6 +147,7 @@ function addMouseListeners() {
     gElCanvas.addEventListener('mousemove', onMove);
     gElCanvas.addEventListener('mousedown', onDown);
     gElCanvas.addEventListener('mouseup', onUp);
+    window.addEventListener('resize', renderMeme)
 }
 
 function addTouchListeners() {
@@ -247,7 +267,6 @@ function doUploadImg(imgDataUrl, onSuccess) {
         })
         .then(res => res.text())
         .then((url) => {
-            console.log('Got back live url:', url);
             onSuccess(url)
         })
         .catch((err) => {
@@ -256,20 +275,17 @@ function doUploadImg(imgDataUrl, onSuccess) {
 }
 
 function onImgInput(ev) {
-    loadImageFromInput(ev, renderImg)
+    loadImageFromInput(ev, drawImg)
 }
 
 function loadImageFromInput(ev, onImageReady) {
     var reader = new FileReader()
 
     reader.onload = function(event) {
-        console.log('onload');
         var img = new Image()
-            // Render on canvas
-        img.onload = onImageReady.bind(null, img)
         img.src = event.target.result
-        gImg = img
-        console.log('onload');
+        createImgObject(img.src)
+        img.onload = onImageReady.bind(null, img.src)
     }
     reader.readAsDataURL(ev.target.files[0])
 }

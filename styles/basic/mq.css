@@ -1,15 +1,14 @@
 @media (max-width: 860px) {
-    .meme-editor {
-        flex-direction: column;
-    }
     .control-box {
         height: 487px;
         width: 280px;
     }
     .meme-editor {
+        flex-direction: column;
         height: unset !important;
         width: unset !important;
         align-items: center;
+        gap: 50px !important;
     }
     .search-container {
         flex-direction: column;
@@ -19,7 +18,8 @@
         gap: 2px !important;
     }
     .control-box {
-        width: 100%;
+        width: 80%;
+        min-width: 350px;
         grid-template-columns: unset !important;
         grid-template-rows: unset !important;
     }

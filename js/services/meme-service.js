@@ -134,16 +134,19 @@ function setStroke() {
 
 function setAlign(key) {
     var currLine = gMeme.lines[gMeme.selectedLineIdx];
+    var ctx = getCtx();
+    var canvas = getCanvas();
+    var mesaures = ctx.measureText(currLine.txt)
     currLine.align = key;
     switch (key) {
         case 'left':
             currLine.pos.x = 0;
             break;
         case 'center':
-            currLine.pos.x = 120;
+            currLine.pos.x = ((canvas.width / 2) - (mesaures.width / 2));
             break;
         case 'right':
-            currLine.pos.x = 270;
+            currLine.pos.x = (canvas.width - mesaures.width);
             break;
         default:
             break;

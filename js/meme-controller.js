@@ -22,6 +22,14 @@ function renderMeme() {
     gElCanvas.style.cursor = 'grab'
 }
 
+function getCtx() {
+    return gCtx;
+}
+
+function getCanvas() {
+    return gElCanvas;
+}
+
 
 function drawText() {
     const meme = getMeme();
